@@ -1,0 +1,28 @@
+REFF: https://www.youtube.com/watch?v=Ds72NeTjI60&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=29
+===================
+1.Topic.create(:name => "Third Topic", :position => 3, :visible => false)
+2. topic = Topic.find(4)
+3. topic =Topic.find_by_id(4)
+4. topic =Topic.find_by_name(3)
+5. topic =Topic.find_by_name("topic")
+6. topic =Topic.all
+7. topic =Topic.first
+8. topic =Topic.last
+9. topic = Topic.where(:position => 1)
+10. topic.to_sql
+11. topic = Topic.where(:position => 1) atau topic = Topic.where("position = 1")
+12. topic = Topic.where("visible = true")
+13. topic = Topic.where(:position => 1).where(:visible => true) atau  topic = Topic.where("position = 1").where("visible = true")
+14. topic = Topic.where(:position => 1).where(:visible => true).first
+15. topic = Topic.where(:position => 1).where(:visible => true).last
+16. topic = Topic.order("position")
+17. topic = Topic.order("position DESC")
+18. topic = Topic.order("position ASC")
+19. topic = Topic.order(:position)
+20. topic = Topic.limit(1)
+21. topic = Topic.limit(6).first
+22. topic = Topic.limit(6).last
+23. topic = Topic.limit(1).offset(2)
+24. topic = Topic.limit(1).offset(1)
+25. topic = Topic.limit(1).offset(1).order(:position)
+26. topic = Topic.limit(1).offset(1).order(:position).where(:visible => true)

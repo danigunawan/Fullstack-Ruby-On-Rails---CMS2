@@ -1,0 +1,32 @@
+REFF : https://www.youtube.com/watch?v=NopMWDlt0pU&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=5
+
+1. untuk membuat sample routing kita harus membuat controller terlebih dahulu, buka terminal :
+- membuat controller : 
+rails generate controller essa / rails g controller essa
+
+- membuat controller beserta resourcenya seperti views, route :
+rails generate controller essa index / rails g controller essa index
+syntax diatas akan membuat views/index.html.erb dan route get 'essa/index'
+
+- rollback/destroy controller yang salah dibuat
+rails destroy controller essa
+
+2. jika kita tidak menggunakan perintah langsung membuat routes, views index: 
+rails generate controller essa index / rails g controller essa index
+
+
+maka kita bisa membuat manual dengan cara :
+
+- buat file index.html.erb pada folder essa sehingga views/essa/index.html.erb
+
+lalu isi konten contoh : <h2> test index </h2>
+
+- buka config/routes.rb 
+tambahkan : 
+
+root 'essa#index'  
+
+# kode root diatas ini artinya menampilkan index pada folder essa yakni berada di : views/essa/index.html.erb 
+ingat root ini adalah yang pertama kali diakses pada localhost:3000 atau root website beda lagi denganfungsi get , post, put atau lainnya
+
+- coba rails s dan buka pada localhost:3000

@@ -1,0 +1,85 @@
+REFF : https://www.youtube.com/watch?v=EozQMn0AL04&index=25&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+======================
+1. buat model : 
+- rails generate model topic
+- rails generate model Page
+- rails generate model Section
+
+2. buka migrasi topic db/migrate/20171116093703_create_topics.rb
+edit/ubah seperti ini :
+
+class CreateTopics < ActiveRecord::Migration[5.1]
+  def up
+    create_table :topics do |t|
+      t.string "name"
+      t.integer "position"
+      t.boolean "visible", :default => false
+      t.timestamps
+    end
+  end
+    def down
+    drop_table :topics 
+      
+    end
+end
+
+
+3. buka migrasi Page db/migrate/20171116093811_create_pages.rb
+edit/ubah seperti ini :
+
+class CreatePages < ActiveRecord::Migration[5.1]
+  def change
+    create_table :pages do |t|
+      t.integer "topic_id"
+      t.string "name"
+      t.string "permalink"
+      t.integer "position"
+      t.boolean "visible", :default => false
+      t.timestamps
+     end
+     add_index("pages","topic_id")
+     add_index("pages","permalink")
+
+  end
+
+  def down
+  	drop_table :pages
+  	end
+end
+
+
+4. buka migrasi Section db/migrate/20171116093903_create_sections.rb
+edit/ubah seperti ini :
+
+class CreateSections < ActiveRecord::Migration[5.1]
+  def change
+    create_table :sections do |t|
+      t.integer "page_id"
+      t.string "name"
+      t.integer "position"
+      t.boolean "visible", :default => false
+      t.string "content_type"
+      t.text "content"
+      t.timestamps
+     end
+     add_index("sections","page_id")
+  end
+  def down
+  	drop_table :sections
+  end
+end
+
+
+5. rails db:migrate
+6. rails db:migrate:status
+
+database: cms_development
+
+ Status   Migration ID    Migration Name
+--------------------------------------------------
+   up     20171116072616  My muhammed
+   up     20171116072952  Create people
+   up     20171116083319  Admin users
+   up     20171116093703  Create topics
+   up     20171116093811  Create pages
+   up     20171116093903  Create sections

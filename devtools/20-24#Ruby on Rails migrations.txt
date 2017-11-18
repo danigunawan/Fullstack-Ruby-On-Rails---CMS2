@@ -1,0 +1,218 @@
+REFF : https://www.youtube.com/watch?v=LjU3c5PstlQ&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=20
+ACTIVE RECORD MIGRATION : http://edgeguides.rubyonrails.org/active_record_migrations.html
+===============================
+1. buka terminal
+2. buat migrasi
+rails generate migration MyMuhammed 
+3. buka file migrasi :
+db/migrate/20171116072616_my_muhammed.rb
+tambahkan dan nonaktifkan method change :
+ def up
+  	
+  end
+  def down
+  	
+  end
+
+
+sehingga : 
+class MyMuhammed < ActiveRecord::Migration[5.1]
+  # def change
+  # end
+  def up
+  	
+  end
+  def down
+  	
+  end
+end
+
+3. buat model Person
+rails generate model Person
+
+nanti akan membuat file model dan migrasi :
+- \cms2\db\migrate\20171116072952_create_people.rb (ini migrasi)
+- \cms2\app\models\person.rb (ini model)
+
+4. buka file migrasi 20171116072952_create_people.rb
+hapus def change dan ubah total sehingga seperti dibawah ini hanya ada method up dan down , up untuk create dan down untuk drop migrasi :
+
+class CreatePeople < ActiveRecord::Migration[5.1]
+
+
+  def up
+    create_table :persons do |t|
+    t.column "firstName", :string, :limit => 60
+    t.column "lastName", :string, :limit => 60
+    t.string "email", :default => '', :null => false
+    t.string "password", :limit => 250
+
+    t.timestamps
+    end
+  end
+
+  def down
+    drop_table :persons
+  end
+end
+
+
+5. rails db:migrate
+cek pada database cms_development maka akan ada 3 table : 
+- persons
+- schema migrations
+- ar_internal_metadata
+
+sekarang kita sudah migrasi dari migrasi file persons
+
+6. kita akan cek apakah sudah migrasi lewat mysql :
+mysql -u root -p
+use cms_development;
+show tables;
+show fields from persons;
+
+7. cek status migrasi 
+rails db:migrate:status
+
+# hasil schema db dilihat pada file schema.rb : 
+cms2\db\schema.rb
+
+8. Mengembalikan migrasi seperti sebelumnya/rollback
+rails db:migrate VERSION=0
+#maka pada database akan kembali semula atau menggunakan migrasi sebelumnya dan file schema db migrasi akan kembali juga seperti sebelum migrasi terbaru.
+
+############# TROUBLE SHOOTING MIGRATION #########
+9. cek list migrasi terlebih dahulu
+rails db:migrate:status
+output :
+database: cms_development
+
+ Status   Migration ID    Migration Name
+--------------------------------------------------
+  down    20171116072616  My muhammed
+  down    20171116072952  Create people
+
+10. migrasi versi sesuai Migrasi ID nya
+rails db:migrate VERSION = 20171116072952
+
+11. Buat migrasi adminUSers
+# inti dari step ini kita akan mengganti table persons menjadi adminUsers
+
+rails generate migration adminUsers
+
+12. buka file migrasi db/migrate/20171116083319_admin_users.rb
+ubah menjadi seperti ini :
+
+class AdminUsers < ActiveRecord::Migration[5.1]
+
+
+
+ def up
+    rename_table("persons", "admin_users") 
+    add_column( "admin_users" , "username",:string,:limit=>45)
+    change_column("admin_users","email" , :string, :limit=>120)
+    rename_column("admin_users","password","hashedPassword"  )
+    add_index("admin_users","username")
+  end
+
+  def down
+ remove_index("adminUsers","username")
+ rename_column("adminUsers", "hashedPassword","password" )
+ change_column("adminUsers","email" )
+ remove_column( "adminUsers" , "username" ) 
+ rename_table(  "adminUsers","persons") 
+   
+    
+  
+      
+    end
+end
+
+
+13. rails db:migrate untuk # kita ganti nama table beserta field dari persons menjadi adminUsers
+
+
+jika ada eror berarti solusinya pada 20171116083319_admin_users.rb def down migrasi di matikan dulu migrasinya :
+
+  def down
+	# remove_index("adminUsers", "username")
+ #    rename_column("adminUsers","hashedPassword","password")
+ #    change_column("adminUsers","email", :default => '', :null => false)
+ #    remove_column("adminUsers", "username")
+ #    rename_table("adminUsers", "persons")
+  end
+
+atau jika belum solved : 
+
+kita pakai migrasi yang lain dulu :
+
+- cek migrasi rails db:migrate:status
+ambil migrasi yang tidak punya hubungan aksi saat ini yakni people dengan admin users, kita pilih migrasi My Muhammed krn ini yg tidak ada pengaruh
+ Status   Migration ID    Migration Name
+--------------------------------------------------
+   up     20171116072616  My muhammed
+   up     20171116072952  Create people
+  down    20171116083319  Admin users
+
+
+KET : 
+Migration class terdiri dari 2 method yaitu up dan down. 
+1. Method up() harus mengandung code yang mengimplementasikan migrasi database aktual, 
+2. method down() bisa berisi code yang me-revert/kembalikan apa yang telah dilakukan up().  
+contoh : pada migrasi 20171116072616_my_muhammed.rb dia melakukan up, jika menggunakan down maka proses migrasi dikembalikan dengan data sebelumnya
+
+- kita coba rails db:migrate:down VERSION=20171116072616 # pada migrasi file My muhammed
+- lalu kita revert juga migrasi pada file migrasi create people , 
+rails db:migrate:down VERSION=20171116072952
+
+jika error Mysql2::Error: Unknown table 'cms_development.persons': DROP TABLE `persons`
+
+maka solusinya kita revert dari table adminUsers :
+rails db:migrate:down VERSION=20171116083319
+
+- coba create people migrasikan :
+rails db:migrate VERSION=20171116072952 # create people
+
+jika eror : 
+Mysql2::Error: Table 'cms_development.persons' doesn't exist: RENAME TABLE `persons` TO `admin_users`
+H:/laragon/www/rubyonrails/buildcms/cms2/db/migrate/20171116083319_admin_users.rb:6:in `up'
+bin/rails:4:in `require'
+bin/rails:4:in `<main>'
+
+
+Caused by:
+ActiveRecord::StatementInvalid: Mysql2::Error: Table 'cms_development.persons' doesn't exist: RENAME TABLE `persons` TO `admin_users`
+H:/laragon/www/rubyonrails/buildcms/cms2/db/migrate/20171116083319_admin_users.rb:6:in `up'
+bin/rails:4:in `require'
+bin/rails:4:in `<main>'
+
+Caused by:
+Mysql2::Error: Table 'cms_development.persons' doesn't exist
+H:/laragon/www/rubyonrails/buildcms/cms2/db/migrate/20171116083319_admin_users.rb:6:in `up'
+bin/rails:4:in `require'
+bin/rails:4:in `<main>'
+Tasks: TOP => db:migrate
+(See full trace by running task with --trace)
+
+Solusinya : 
+
+- rails db:migrate:down VERSION=20171116083319 # kita drop/revert migrasi admin Users
+
+JIKA MASIH TIDAK BISA TABLE PADA PERSON DROP/HAPUS PERMANEN menggunakan HEIDISQL SEMUA BAIK ITU :
+-ar_internal_metadata
+-person
+-schema_migrations
+
+
+3. rails db:migrate
+4. coba cek migrate status pastikan sudah ada 3 table
+rails db:migrate:status
+
+database: cms_development
+
+ Status   Migration ID    Migration Name
+--------------------------------------------------
+   up     20171116072616  My muhammed
+   up     20171116072952  Create people
+   up     20171116083319  Admin users
+

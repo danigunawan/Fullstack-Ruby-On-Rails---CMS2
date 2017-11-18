@@ -1,0 +1,23 @@
+REFF : https://www.youtube.com/watch?v=5YWwORfzaZ4&index=10&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+
+Bundle install mirip seperti dependency dari laravel / php pakai composer
+Documentation : Bundle.io
+
+1. buka terminal cd ke root project ruby rails lalu ketikan perintah :
+
+gem install bundler
+
+jika ingin spesifik versinya bisa pakai ini :
+
+- buka Gemfile pada root project isikan seperti ini :
+
+source 'https://rubygems.org'
+gem 'nokogiri'
+gem 'rack', '~> 2.0.1'
+gem 'rspec'
+
+2. setelah kita install bundler :
+Pasang semua ruby yang dibutuhkan dari sumber yang Anda tentukan tadi diatas secara spesifik:
+
+$ bundle install
+$ git add Gemfile Gemfile.lock

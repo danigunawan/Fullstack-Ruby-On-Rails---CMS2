@@ -1,0 +1,12 @@
+CARA 1
+==========
+1. railsinstaller.org
+download : versi windows terbaru
+
+2. lalu centang config saat selesai installer dan konfig ikuti sesuai prosedur
+
+3. coba cek rails -v
+
+=========
+CARA 2
+1. bisa dengan Laragon Installer  lebih praktis : laragon.org

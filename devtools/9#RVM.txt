@@ -1,0 +1,17 @@
+RVM - Ruby Version Manager lebih seperti kita ngolah environment versi core dari framework, mirip ENV Manager pada laravel dan Django ENV
+
+REFF: https://www.youtube.com/watch?v=z40rNlrKyfM&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=9
+=======================
+1. docs install rvm : https://rvm.io/rvm/install
+
+2. Install GPG Keys, buka terminal copykan :
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+
+3. Install RVM (development version) (ini khusus ubuntu):
+\curl -sSL https://get.rvm.io | bash
+
+jika khusus windows reff (https://vaporsoft.net/setting-up-rvm-with-cygwin/ dan https://rvm.io/rvm/install):
+- harus install cygwin di : https://cygwin.com/install.html 
+- 
+
+==== KARENA BARU BISA DIGUNAKAN DILINUX, SEMENTARA SKIP DLU STEP INI ============

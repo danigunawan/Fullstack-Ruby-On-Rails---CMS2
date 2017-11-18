@@ -1,0 +1,23 @@
+REFF: https://www.youtube.com/watch?v=_9WdaAImQsQ&index=28&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+===================================
+1. rails console
+2. topic = Topic.new
+3. topic = Topic.find(1) # mencari id=1 pada table topic
+4. cek per field value :
+- topic.id
+- topic.name
+- topic.position
+- topic.visible
+5. MANIPULASI / UPDATE ID = 1 pada tabel Topic
+topic.name = "first topic"
+topic.save
+
+jika pada SQL QUERY RAW NYA :
+UPDATE 'topics' SET 'name' = 'first topic', 'updated_at' = '2017-06-20 04:15:03' WHERE 'topics'.'id' = 1
+
+6. Create Satu Tembakan : 
+Topic.create(:name => "topic to delete")
+
+7. Delete By ID Topic
+topic = Topic.find(3)
+topic.destroy

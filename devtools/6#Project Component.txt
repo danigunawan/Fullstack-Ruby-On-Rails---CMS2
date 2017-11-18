@@ -1,0 +1,5 @@
+REFF : 
+- https://www.youtube.com/watch?v=yWSfn5QygIs&index=6&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+- http://guides.rubyonrails.org/getting_started.html
+=======================================================
+pada project component ini lebih ke pengenalan saja komponen apa saja yang ada di ROR seperti jobs, helper, model, controller, assets, view, middleware dan lainnya

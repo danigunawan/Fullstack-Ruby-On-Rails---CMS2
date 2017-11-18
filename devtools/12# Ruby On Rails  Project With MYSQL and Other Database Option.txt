@@ -1,0 +1,79 @@
+REFF : https://www.youtube.com/watch?v=fkDlvbmrTfU&index=12&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+
+REFF MEMBUAT USER PRIVILEGES MYSQL : http://www.duniailkom.com/cara-membuat-hak-akses-privileges-user-mysql-grant/
+
+1. buat folder baru misal cms2 atau bisa dengan buka terminal mkdir cms2
+2. buat project langsung dengan konfigurasi mysql dan database lainnya dengan opsi sintaks, pilih salah satu dibawah ini:
+rails new cms2 -d mysql
+rails new cms2 -d postgresql
+rails new cms2 -d sqlite3
+rails new cms2 -d oracle
+rails new cms2 -d frontbase
+rails new cms2 -d ibm_db
+rails new cms2 -d sqlserver
+rails new cms2 -d jdbcmysql
+rails new cms2 -d jdbcsqlite3
+rails new cms2 -d jdbcpostgresql
+rails new cms2 -d jdbc
+
+# CASE LANGKAH JIKA KITA MENGGUNAKAN MYSQL
+3. pastikan di gemfile sudah terinstall paket mysql2
+komponen lainnya yang berhubungan dengan mysql paket ada di :
+- database.yml
+- application.rb
+- development.rb
+- test.rb
+4. jalankan bundle install
+jika ada eror: 
+
+an eror occured while installing mysql2 (0.4.6) and bundler cannot continue.
+make sure that 'gem install mysql2 -v '0.4.6'' succeds before bundling.
+
+solusi :
+
+gem install mysql2 -v '0.4.6'
+
+5. kita akan coba buat database dan konfig database :
+
+buka terminal masuk mysql :
+
+- mysql -u root -p
+- CREATE DATABASE blog_dev;
+- CREATE DATABASE blog_test;
+- buat user privileges :
+
+CREATE USER 'dani_rails'@'localhost' IDENTIFIED BY '29912120';
+
+coba masuk akses :
+mysql -u dani_rails -p
+dengan password : 29912120
+
+jika berhasil kita buat grant akses ditahap berikutnya.
+
+- kita beri hak akses pada database blog_dev apa saja / grant (select upate delete insert dll) user dani_rails yang dipakai diatas :
+GRANT ALL PRIVILEGES ON blog_dev.* TO 'dani_rails'@'localhost' IDENTIFIED BY '29912120';
+- kita beri hak akses pada database blog_test apa saja / grant (select upate delete insert dll) user dani_rails yang dipakai diatas :
+GRANT ALL PRIVILEGES ON blog_test.* TO 'dani_rails'@'localhost' IDENTIFIED BY '29912120';
+
+6. pada database.yml kita seting pada adapter : mysql2 :
+username : dani_rails
+password : 29912120
+
+- pada development : kita ganti nama database nya menjadi sesuai yang kita buat yakni blog_dev:
+
+development :
+<<: *default
+database : blog_dev
+
+- pada test : pun sama kita ubah sesuai nama database testnya yang kita buat tadi:
+test :
+<<: *default
+database : blog_test
+
+7. rails db:schema:dump
+jika error : could not find gem 'mysql2 (<0.5, >= 0.3.18)' in any of the gem sources listed in your gemfile
+run 'bundle install' to install missing gems
+
+solusi : 
+
+bundle install

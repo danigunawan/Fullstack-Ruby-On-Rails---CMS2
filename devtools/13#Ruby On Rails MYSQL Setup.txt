@@ -1,0 +1,64 @@
+REFF : https://www.youtube.com/watch?v=k2TRIi79uQQ&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=13
+
+=========================================
+1.rails new cms -d mysql
+2. bundle install
+
+#pada langkah 3 jika tidak menggunakan os linux skip saja
+3. install package mysql di linux
+- yum install mysql-devel
+- sudo apt-get install libmysql-ruby libmysqlclient-dev
+
+4. Buat database dan konfig :
+- mysql -u root -p
+- CREATE DATABASE cms_development;
+- CREATE DATABASE cms_test;
+- buat user privileges :
+
+CARA 1 JIKA DENGAN USER ROOT
+=========================
+jika berhasil kita buat grant akses ditahap berikutnya.
+
+- kita beri hak akses pada database cms_development apa saja / grant (select upate delete insert dll) user root dan pass identified kosong bawaan root yang dipakai diatas :
+GRANT ALL PRIVILEGES ON cms_development.* TO 'root'@'localhost' IDENTIFIED BY '';
+- kita beri hak akses pada database cms_test apa saja / grant (select upate delete insert dll) user root dan pass identified kosong bawaan root yang dipakai diatas :
+GRANT ALL PRIVILEGES ON cms_test.* TO 'root'@'localhost' IDENTIFIED BY '';
+
+CARA 2 JIKA DENGAN USER BARU
+=========================
+- buat user privileges :
+
+CREATE USER 'dani_rails'@'localhost' IDENTIFIED BY '29912120';
+
+coba masuk akses :
+mysql -u dani_rails -p
+dengan password : 29912120
+
+- kita beri hak akses pada database cms_development apa saja / grant (select upate delete insert dll) user dani_rails yang dipakai diatas :
+GRANT ALL PRIVILEGES ON cms_development.* TO 'dani_rails'@'localhost' IDENTIFIED BY '29912120';
+- kita beri hak akses pada database cms_test apa saja / grant (select upate delete insert dll) user dani_rails yang dipakai diatas :
+GRANT ALL PRIVILEGES ON cms_test.* TO 'dani_rails'@'localhost' IDENTIFIED BY '29912120';
+
+5. ubah setingan pada database.yml seperti ini sesuai dengan database dan user yang kita buat tadi beserta grant accessnya :
+
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password:
+  host: localhost
+
+development:
+  <<: *default
+  database: cms_development
+
+test:
+  <<: *default
+  database: cms_test
+
+diatas password kosong karena pakai mysql root default.
+
+6. rails db:schema:dump
+coba cek pada H:\laragon\www\rubyonrails\buildcms\cms2\db jika file schema.rb sudah ada berarti berhasil
+ini dipakai untuk generate schema db pada rails

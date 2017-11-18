@@ -1,0 +1,74 @@
+REFF : https://www.youtube.com/watch?v=t7gcOK1tovo&index=14&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+================================================
+1. rails generate # berisi perintah generate pada rails berikut detailsnya :
+Usage: rails generate GENERATOR [args] [options]
+
+General options:
+  -h, [--help]     # Print generator's options and usage
+  -p, [--pretend]  # Run but do not make any changes
+  -f, [--force]    # Overwrite files that already exist
+  -s, [--skip]     # Skip files that already exist
+  -q, [--quiet]    # Suppress status output
+
+Please choose a generator below.
+
+Rails:
+  assets
+  channel
+  controller
+  generator
+  helper
+  integration_test
+  jbuilder
+  job
+  mailer
+  migration
+  model
+  resource
+  scaffold
+  scaffold_controller
+  system_test
+  task
+
+Coffee:
+  coffee:assets
+
+Js:
+  js:assets
+
+TestUnit:
+  test_unit:generator
+  test_unit:plugin
+
+2. MEMBUAT CONTROLLER 
+rails generate controller muhammed index # membuat controller muhammed 
+beserta views, test_unit, assets/javascripts/muhammed.coffee.scss, dan app/assets/stylesheets/muhammed.scss dalam satu kali perintah
+
+3. rails s
+coba akses localhost:3000/muhammed/index
+
+#JIKA MENGGUNAKAN tahap 4 INI KITA TIDAK MEMENUHI SYARAT MVC RAILS
+4. KITA COBA MEMBUAT PAGE BARU DENGAN TANPA KONSEP MVC KITA COMPARE DENGAN MVC, DIBAWAH INI AKSES LANGSUNG TANPA CONTROLLER 
+- buat file mypage.html pada public/mypage.html dengan isi :
+<h1>Hello this is test mypages from public</h1>
+
+- coba rail s akses ke localhost:3000/mypage.html maka bisa tapi statis
+
+
+MVC RAILS ITU HARUS MELIPUTI MODEL VIEWS DAN CONTROLLERS JADI NANTI ADA CONTROLLER YANG NGATUR PASS VIEWS RENDER, MODEL AKSES MANIPULASI DATABASE DAN ACTIVE RECORD LALU CONTROLLER UNTUK
+MENGATUR METHOD CLASS, PASS PADA ROUTES.
+
+5. Mengubah/membuat root index
+- buka  H:\laragon\www\rubyonrails\buildcms\cms2\config\routes.rb
+ubah  : get 'muhammad/index' menjadi  root 'muhammad#index'
+
+- refresh dan coba rails s localhost:3000 maka muncul :
+Find me in app/views/muhammad/index.html.erb
+bahwa controller dan routes mengakses views pada views/muhammad/index.html.erb
+
+6. coba kita buat 2 routes :
+get 'muhammad/index' dan root 'muhammad#index' #muhammad itu nama folder nya pada views sedangkan index itu nama filenya
+
+maka root 'muhammad#index' : diakses dengan localhost:3000 # file index ini ada di public/index.html kalau tidak ada dibuat dulu
+sedangkan get 'muhammad/index' diakses dengan localhost:3000/muhammad/index
+

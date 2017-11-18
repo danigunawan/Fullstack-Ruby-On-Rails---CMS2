@@ -1,0 +1,4 @@
+REFF: https://www.youtube.com/watch?v=mE9MYHjK6EI&index=19&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+===================================================================================================
+1. konfigurasi database ROR 
+- config/database.yml

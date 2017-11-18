@@ -1,0 +1,49 @@
+VIDEO TUTORIAL BUILD CMS :
+https://www.youtube.com/watch?v=cPf4uJeg1PQ&index=44&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+
+==========================
+1. intro
+2. ROR install on windows 
+3. RIR install on linux
+4. ROR create project
+5. ROR routing pages
+6. ROR project components
+7. ROR active record
+8. ROR MVC architecture
+9. ROR RVM
+10.ROR Bundle Install
+11. ROR MVC Method
+12. ROR Mysql Connection
+13. ROR MYSQL Setup
+14. ROR Framework Architecture
+15. ROR Render & Redirect Pages
+16. ROR ERB Templates
+17. ROR Links with pages
+18. ROR URL Params
+19. ROR Database
+20. ROR Migration
+21. ROR Migrationb & Database
+22. ROR Migrations Commands
+23. ROR Migrations Troubleshooting 1
+24. ROR Migrations Troubleshooting 2
+25. ROR Create Models
+26. ROR play with models
+27. ROR Console
+28. ROR Console With Database
+29. ROR Database Relationship
+30. ROR CRUD Database 1
+31. ROR Database Expression
+32. ROR CRUD Methods Database
+33. ROR CRUD Database 2
+34. ROR CRUD Database 3
+35. ROR Migration & Database 1
+36. ROR Migration & Database 2
+37. ROR Debuging & Migration
+38. ROR Build CMS in One Step
+39. ROR Edit CMS Files
+40. ROR User Authentications
+41. ROR User Page & Routing
+42. ROR add CSS Bootstrap Framework
+43. ROR Layout Add Javascript And CSS
+44. ROR Where To Go
+

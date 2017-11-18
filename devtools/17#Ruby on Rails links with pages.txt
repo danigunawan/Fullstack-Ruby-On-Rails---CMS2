@@ -1,0 +1,12 @@
+REFF : https://www.youtube.com/watch?v=8tcSa-ccxT0&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=17
+
+======================================================================================================
+1. membuat link pages
+-buka views/muhammad/index.html.erb tambahkan :
+
+<%= link_to('Welcome', {:action => 'welcome'}) %> <br> #  Link_to Welcome adalah aliasnya dan welcome pada action ini adalah diambil pada template nama viewsnya yakni welcome.html.erb
+<%= link_to('index', {:action => 'index'}) %> <br>
+
+-buka views/muhammad/welcome.html.erb tambahkan :
+<%= link_to('index', {:action => 'index'}) %> <br>
+

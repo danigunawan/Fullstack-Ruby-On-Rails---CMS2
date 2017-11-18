@@ -1,0 +1,109 @@
+REFF : https://www.youtube.com/watch?v=Ppm-rn03Tjg&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=35
+============================================
+#Buat Migrasi
+1. rails generate migration AdminUsersPageCreation
+2. buka file migrasi yang tadi dibuat :
+\cms2\db\migrate\20171118132441_admin_users_page_creation.rb
+3. pada 20171118132441_admin_users_page_creation.rb ubah seperti dibawah ini :
+
+class AdminUsersPageCreation < ActiveRecord::Migration[5.1]
+  def up
+  	  create_table :admin_users_pages do |t|
+      t.integer "id_admin_users"
+      t.integer "page_id"
+     end 
+  	 add_index("admin_users_pages",["id_admin_users","page_id"])
+  
+end
+
+  def down
+  	drop_table :admin_users_pages
+  end
+
+
+end
+
+
+# admin_users_pages ini adalah nama tablenya nanti
+
+Ket :
+method up dan down 
+untuk Method up() harus mengandung code yang mengimplementasikan migrasi database aktual, 
+sedangkan method down() bisa berisi code yang me-revert apa yang telah dilakukan up().
+
+==================== MIGRATE TROUBLE SHOOTING TIPS ==================================
+4. rails db:migrate
+
+jika error :
+
+rails aborted!
+SyntaxError: H:/laragon/www/rubyonrails/buildcms/cms2/db/migrate/20171118132441_admin_users_page_creation.rb:13: syntax error, unexpected end-of-input, expecting keyword_end
+bin/rails:4:in `require'
+bin/rails:4:in `<main>'
+Tasks: TOP => db:migrate
+(See full trace by running task with --trace)
+
+
+# SOLUSI 1 : 
+
+- rails db:migrate:status
+
+
+ Status   Migration ID    Migration Name
+--------------------------------------------------
+   up     20171116072616  My muhammed
+   up     20171116072952  Create people
+   up     20171116083319  Admin users
+   up     20171116093703  Create topics
+   up     20171116093811  Create pages
+   up     20171116093903  Create sections
+  down    20171118132441  Admin users page creation
+
+- pilih migrasi yang down sebeluym up dari Admin users page creation yaitu (20171118132441)
+- rails db:migrate:down VERSION= 20171118132441
+
+jika error dibawah ini lagi:
+
+? rails db:migrate:down VERSION= 20171118132441
+rails aborted!
+VERSION is required - To go down one migration, use db:rollback
+bin/rails:4:in `require'
+bin/rails:4:in `<main>'
+Tasks: TOP => db:migrate:down
+(See full trace by running task with --trace)
+
+- coba ulangi lagi cek db:migrate:status
+
+database: cms_development
+
+ Status   Migration ID    Migration Name
+--------------------------------------------------
+   up     20171116072616  My muhammed
+   up     20171116072952  Create people
+   up     20171116083319  Admin users
+   up     20171116093703  Create topics
+   up     20171116093811  Create pages
+   up     20171116093903  Create sections
+  down    20171118132441  Admin users page creation
+
+- rails db:migrate:down VERSION=20171118132441
+
+
+# SOLUSI 2 :
+
+- jika tetap tidak bisa coba drop table admin_users_pages
+- buka mysql 
+mysql -u root -p
+- show databases;
+cari cms_development
+- use cms_development;
+- show tables;
+cari tables admin_users_pages;
+- drop admin_users_pages;
+
+============== END MIGRATE TROUBLE SHOOTING ===================
+
+
+5. buka model page
+\buildcms\cms2\app\models\page.rb
+

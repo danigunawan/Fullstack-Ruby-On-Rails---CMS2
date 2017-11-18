@@ -1,0 +1,148 @@
+REFF : https://www.youtube.com/watch?v=nfWyPSD8lfI&index=32&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+============================================
+CRUD Method Database :
+- One To One
+- One To Many
+- Many To Many
+########################
+
+
+###### HAS ONE ################
+1. buka models/topic.rb
+tambahkan :
+
+has_one :page
+
+sehingga seperti ini :
+
+class Topic < ApplicationRecord
+
+
+scope :search, lambda {|query| where(["name LIKE ?","%#{query}%"])}
+scope :newest_first, lambda{ order("created_at DESC")}
+scope :visible, lambda{ where(:visible => true)}
+scope :invisible, lambda{ where(:visible => false)}
+scope :sorted, lambda{ order(:position)}
+
+has_one :page
+
+end
+
+2. tes relationship has one 
+topic = Topic.find(2)
+topic.page
+===============
+first_page = Page.new(:name => "first page", :permalink =>"first", :position =>1, :visible => true)
+first_page.topic_id (masih null)
+topic.page = first_page
+
+# hasilnya query :
+INSERT INTO `pages` (`topic_id`, `name`, `permalink`, `position`, `visible`, `created_at`, `updated_at`) VALUES (2, 'first page', 'first', 1, 1, '2017-11-16 14:14:01', '2017-11-16 14:14:01')
+nilai topic_id = 2 diambil dari topic = Topic.find(2)
+
+#cek id FK relasi
+first_page.topic_id
+
+
+3. buka models/page.rb
+tambahkan :
+belongs_to :topic
+
+sehingga :
+
+class Page < ApplicationRecord
+
+	belongs_to :topic
+end
+
+4. check relasi belongsto page milik si topic
+topic = Topic.find(1)
+topic.page
+first_page = Page.find(1)
+first_page.topic
+
+5. - first_page.new_record?
+6. delete topic id = 1
+topic = Topic.find(1)
+topic.destroy
+
+7. coba cek data sudah hapus atau tidak :
+Page.all
+
+
+=================================================
+
+####### HAS MANY #########
+
+8. buka models/topic.rb
+ganti has_one menjadi has_many :pages 
+
+sehingga :
+
+class Topic < ApplicationRecord
+
+
+scope :search, lambda {|query| where(["name LIKE ?","%#{query}%"])}
+scope :newest_first, lambda{ order("created_at DESC")}
+scope :visible, lambda{ where(:visible => true)}
+scope :invisible, lambda{ where(:visible => false)}
+scope :sorted, lambda{ order(:position)}
+
+has_many :page
+
+end
+
+# jika has_one :page namun jika has_many ditambah s dibelakang jadi has_many :pages karena many banyak
+
+9. Tes relasi has many 
+topic = Topic.find(2)
+topic.pages #pages dari has_many :pages
+
+10. Insert topic has many pages // topic punya banyak page
+first_page = Page.new(:name => "first page", :permalink => 'first', :position => 1, :visible => false)
+topic.pages << first_page # syntax has many insert
+
+11. check relasi
+topic.pages
+
+12. first_page.new_record? # apakah ada record baru?
+
+13. coba kita insert data ke dua :
+
+- first_page = Page.new(name: "second page", permalink: "second", posit
+ion: 2, visible: true)
+
+- topic.pages << first_page
+ 
+- topic.pages
+
+
+14. coba kita insert data ke tiga:
+
+- first_page = Page.new(name: "third page", permalink: 'third', posit
+ion: 3, visible: false)
+
+- topic.pages << first_page
+ 
+- topic.pages
+
+15. menghitung banyak data pada relasi topic has many pages
+topic.pages.size
+
+16. cek relasi yang kosong : 
+topic.pages.empty?
+17. count banyak relasi topic dan pages :
+topic.pages.count
+
+18. insert data ke 4 :
+forth_page = Page.new(name: "forth page", permalink: 'forth', position: 4, visible: false)
+topic.pages << forth_page
+topic.pages
+topic.pages.count
+
+### delete child table / fk topic_id relasi dengan berdasar id PK pages
+topic.pages.delete(forth_page)
+
+# muncul notice malah update : ? kenapa
+ SQL (7.0ms)  UPDATE `pages` SET `pages`.`topic_id` = NULL WHERE `pages`.`topic_id` = 2 AND `pages`.`id` = 5
+

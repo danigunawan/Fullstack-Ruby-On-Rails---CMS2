@@ -1,0 +1,4 @@
+REFF : https://www.youtube.com/watch?v=XkwxiQAK6ZU&index=7&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+http://guides.rubyonrails.org/active_record_basics.html
+========================
+1. konfigurasi active record untuk development ada di config/environments/development.rb

@@ -1,0 +1,41 @@
+REFF: https://www.youtube.com/watch?v=XcV3_WwD400&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=27
+
+==================================================
+1. rails console
+2. jika ingin keluar console
+quit
+3. kita coba manipulasi object Topic
+pada rails console ketik :
+
+
+COBA SAVE DATA PERTAMA
+========================
+
+# kita instantiasi object topic yang berada pada model topic.rb pada class Topic < ApplicationRecord
+topic = Topic.New 
+# kita tampung data object pada instantiasi
+topic = Topic.new(:name => "Muhammed", :position=>1, :visible => true)
+# coba kita lihat object tampungan tadi :
+ketik pada terminal :
+- topic.name
+- topic.position
+- topic.visible
+
+#SAVE object tampungan tadi
+topic.save
+
+cek kembali
+- topic.id
+- topic.name
+- topic.position
+- topic.visible
+
+COBA SAVE DATA KEDUA
+========================
+# kita ulangitampung data yang kedua object save pada instantiasi
+topic = Topic.new(:name => "Ahmnad", :position=>2, :visible => true)
+
+coba cek new_record :
+topic.new_record?
+
+pastikan output :true karena sudah ada 2 data

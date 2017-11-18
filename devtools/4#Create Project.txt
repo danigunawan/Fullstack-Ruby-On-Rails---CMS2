@@ -1,0 +1,24 @@
+REFF : https://www.youtube.com/watch?v=9KMjEfQYRHQ&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=4
+========
+
+1. install editor ide visual studio code
+2. install extension visual studio code, berikut extensionnya : 
+-ruby
+-ruby language colorization
+- ruby symbol
+- rails
+- ruby snippet
+- ruby-rubocop
+- rails run specs
+- rails go to spec
+
+3. buat folder misal cms2 lalu 
+
+4. buka terminal cd ke cms2
+
+5 buat project bernama blog : 
+rails new blog # jika menggunakan ini maka akan membuat folder blog dan isinya
+rails new . # jika menggunakan ini akan membuat project pada direktori yang sedang aktif misalkan tadi pada cms2
+
+6. cd ke blog terus :
+rails server /rails s

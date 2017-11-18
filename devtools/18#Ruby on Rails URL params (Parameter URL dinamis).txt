@@ -1,0 +1,46 @@
+REF: https://www.youtube.com/watch?v=-BFXtZLEyCA&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=18
+===============================================
+1. buka H:\laragon\www\rubyonrails\buildcms\cms2\app\views\muhammad\index.html.erb
+2. tambahkan : 
+<%= link_to('page.id', {:action => 'index', :page=>3,:id=>2}) %>
+
+3. buka H:\laragon\www\rubyonrails\buildcms\cms2\app\controllers\muhammad_controller.rb
+
+tambahkan variabel pada method index atau def index sehinga seperti ini:
+
+  def index
+  	@id = params['id']
+  	@page = params['page']
+ 	render('index')
+  end
+
+4. buka views/muhammad/index.html.erb tambahkan :
+CARA 1 (native python)
+=============
+ID = <%= params[:id] %>
+Page = <%= params[:page] %>
+
+5. lalu rails s dan buka link page pada http://localhost:3000/muhammad/index
+jika kita buka linknya maka menghasilkan : 
+
+ID = 2 Page = 3 artinya itu adalah id dan page yang dipassing
+
+CARA 2 (ruby rails)
+=============
+
+buka views/muhammad/index.html.erb tambahkan :
+<br>
+ID = <%= @id %>
+Page = <%= @page %>
+
+jika kita buka linknya maka menghasilkan sama saja dengan cara 1 hanya cara ini lebih simple: 
+
+ID = 2 Page = 3 artinya itu adalah id dan page yang dipassing
+
+6.buka views/muhammad/index.html.erb tambahkan :
+
+Page = <%= @page.to_i + 2 %> # page.to_i nomor page yang sedang aktif saat ini misal page=3 maka 3+2 = 5
+
+output : 
+
+Page = 5

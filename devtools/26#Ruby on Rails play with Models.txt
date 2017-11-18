@@ -1,0 +1,62 @@
+REFF: https://www.youtube.com/watch?v=EAc7tc1V2b4&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=26
+
+===============================
+0. rails db:migrate:status
+
+database: cms_development
+
+ Status   Migration ID    Migration Name
+--------------------------------------------------
+   up     20171116072616  My muhammed
+   up     20171116072952  Create people
+   up     20171116083319  Admin users
+   up     20171116093703  Create topics
+   up     20171116093811  Create pages
+   up     20171116093903  Create sections
+
+1. Migrasi Admin Users, maka migrasi create topic, pages, section akan hilang alias hanya sampai admin users dan file sebelumnya yakni (people, my muhammad)
+
+rails db:migrate VERSION=20171116083319
+
+2. rails db:migrate
+
+3. pada models/person.rb edit/rename menjadi AdminUsers.rb beserta edit class nya sesuai dengan file migrasi 20171116083319_admin_users.rb
+jadi intinya nama model/ class pada model harus sama dengan class pada migrasi misal :
+
+nama model :  AdminUser.rb 
+
+maka pada class nya :
+class AdminUser < ApplicationRecord
+end
+
+begitupun dengan class migrasinya pada file 20171116083319_admin_users.rb:
+
+class AdminUsers < ActiveRecord::Migration[5.1]
+
+
+
+
+
+
+
+=======================
+CARA SAVE DATA KE DATABASE DENGAN MODELS
+# tb persons pada model person
+person = person.new
+person.firstname = "Muhammed"
+person.lastname = "Essa"
+person.save
+
+# jika ingin hapus
+person.delete
+
+#jika ingin delete
+persons = person.where(:firstName=>"Muhammed")
+persons = person.order("lastName")
+
+# Jika Select
+SELECT persons.* from persons WHERE
+persons.firstName = "Muhammed" ORDER BY
+person.lastName
+
+dan lain2 cari referensi juga . !

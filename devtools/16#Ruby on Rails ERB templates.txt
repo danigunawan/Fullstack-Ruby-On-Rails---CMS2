@@ -1,0 +1,64 @@
+REFF : 
+https://www.youtube.com/watch?v=03AFkVxc7ZU&index=16&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+
+==============================================================================================
+1. buka views/muhammad/welcome.html.erb
+tambahkan :
+
+<% 2 * 10 %>
+<%= 2 * 10  %>
+
+penjelasan :
+<% 2 * 10 %> ini seperti <?php ?> tidak ada aksi echo = kosong hanya fungsi saja tanpa echo = NULL
+<%= 2 * 10 %> ini seperti <?php echo ?> ada aksi echo = fungsi sekaligus echo = 20
+
+contoh lain :
+
+<% name ='Muhammed'  %> # ini membuat variabel name
+<%= "#{name} Essa" %> # ini meng echo variabel name tadi sintaksnya hastagh #{name}
+
+contoh lain :
+
+<% 5.times do |n| %> # ini adalah membuat variabel dan bentuk foreach looping 5 adalah nilainya konstan
+
+<%= n %> # echo nilai as looping nya yakni n
+
+<% end %> # tutup statements do - end
+
+output : 01234
+
+2. #contoh Array Loop buka muhammad_controller.rb tambahkan pada method welcome :
+
+## CARA 1
+########################################
+#contoh Array Loop
+@array = [1,2,3,4,5,6,7,8,9] 
+
+sehingga:
+  def welcome
+  	@array = [1,2,3,4,5,6,7,8,9]  	
+  	render('welcome') # render dan mempassing variabel @array diatas
+  end 
+
+- buka welcome.html.erb tambahkan :
+<% @array.each do |n| %>
+
+<%= n %>
+
+<% end %>
+
+#######################################
+## CARA 2 JIKA membuat method baru : 
+
+- buka muhammad_controller.rb dan tambahkan :
+
+  def arrayLoop
+  	@array = [1,2,3,4,5,6,7,8,9]  	
+  	render('welcome') # artinya kita render dengan html welcome.html.rb dan mempasing data diatas @array
+  end
+- buka routes.rb tambahkan :  
+get 'muhammad/arrayLoop' # kita buat route get untuk method arrayLoop pada view muhammad '/' = dinamis dan '#' = statis pada route artinya
+
+
+
+

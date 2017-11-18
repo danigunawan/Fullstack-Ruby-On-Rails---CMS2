@@ -1,0 +1,71 @@
+REFF : https://www.youtube.com/watch?v=-RgRN8GJ8NI&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=15
+======================================================================================================
+1. buat file welcome.html.erb di H:\laragon\www\rubyonrails\buildcms\cms2\app\views\muhammad
+2. buka routes.rb 
+
+tambahkan :
+
+get 'muhammad/welcome'
+
+#muhammad itu nama folder nya pada views sedangkan welcome itu nama filenya
+
+3. buka muhammad_controller.rb
+lalu tambahkan atau ubah seperti dibawah ini :
+
+class MuhammadController < ApplicationController
+  def index
+ 	render('index')
+  end
+
+  def welcome
+  	render('welcome')
+  end
+end
+
+#render itu adalah proses untuk memanipulasi html ke dalam http ini menggunakan file ruby rails .erb istilahnya mempassing / parsing html ke httpserver
+
+4. kita coba buat redirect pages
+- buka muhammad_controller.rb
+tambahkan : 
+  def login
+  	#redirect_to(:controller => 'index',:action=>'index')
+  	redirect_to(:action=>'index')
+  end
+
+# sehingga :
+
+class MuhammadController < ApplicationController
+  def index
+ 	render('index')
+  end
+
+  def welcome
+  	render('welcome')
+  end
+  def login
+  	#redirect_to(:controller => 'index',:action=>'index')
+  	redirect_to(:action=>'index')
+  end
+end
+
+KET :
+#redirect_to(:controller => 'index',:action=>'index')
+redirect_to(:action=>'index') # ini artinya dia redirect dengan format routes index/ render dari controller index
+redirect_to('https://google.com') # ini redirect dengan format url
+
+5. tambahkan pada routes.rb
+  get 'muhammad/login'
+
+sehingga : 
+
+Rails.application.routes.draw do
+  get 'muhammad/index'
+
+  root 'muhammad#index' # hastagsh ini artinya static jadi yang di render adalah file yang berada pada public/index.html
+
+  get 'muhammad/welcome'
+
+  get 'muhammad/login'
+
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+end
