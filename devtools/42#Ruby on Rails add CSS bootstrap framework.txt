@@ -1,0 +1,90 @@
+REFF: https://www.youtube.com/watch?v=lr-DJ1urorA&index=42&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+===================================================================================================\
+
+1. download bootstrap http://blog.getbootstrap.com/2016/07/25/bootstrap-3-3-7-released/ buka bootstrap-3.3.7.zip dan copykan isi dari
+bootstrap-3.3.7.zip\bootstrap-3.3.7\dist :
+- js
+- fonts
+-css ke H:\laragon\www\rubyonrails\buildcms\cms2\app\assets\stylesheets
+
+2. buka application.css di H:\laragon\www\rubyonrails\buildcms\cms2\app\assets\stylesheets
+tambahkan :
+ *= bootstrap .
+
+
+3. buka assets.rb di \cms2\config\initializers
+
+4. lalu uncomment dan ubah :
+
+# Rails.application.config.assets.precompile += %w( admin.js admin.css )
+
+menjadi : 
+Rails.application.config.assets.precompile += %w( bootstrap.css )
+
+
+5. buka application.html.erb di  H:\laragon\www\rubyonrails\buildcms\cms2\app\views\layouts
+lalu tambahkan : 
+<%= stylesheet_link_tag    'bootstrap', media: 'all' %>
+
+sehingga seperti :
+
+<head>
+	<title>Cms2</title>
+	<%= csrf_meta_tags %>
+
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+	<%= stylesheet_link_tag    'bootstrap', media: 'all' %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+</head>
+
+
+6. ke application.html.erb ubah seperti dibawah ini : 
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cms</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+ <%= stylesheet_link_tag  'bootstrap', media: 'all'  %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+     
+
+  
+  </head>
+
+  <body>
+
+ 
+
+  <div class="container">
+
+      <div class="starter-template">
+       <br><br>
+        </div>
+
+
+
+
+ <p class="navbar ">
+<% if user_signed_in? %>
+  Logged in as <strong><%= current_user.email %></strong>.
+  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+<% else %>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+<% end %>
+</p>
+
+
+    <%= yield %>
+  </body>
+</html>
+
+
+7. rails s
+ 

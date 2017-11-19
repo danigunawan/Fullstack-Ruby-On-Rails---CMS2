@@ -1,0 +1,87 @@
+REFF: https://www.youtube.com/watch?v=r5QNntagBq4&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=40
+https://github.com/plataformatec/devise
+http://blog.nbostech.com/2015/08/loginregistration-social-signup-using-ruby-on-rails/
+http://guides.railsgirls.com/devise
+================================
+1. buka gemfile 
+tambahkan :
+
+#Register/login auth social
+gem 'devise'
+
+2. bundle install
+
+3. buka gemfile lagi, tambahkan :
+
+# /nbos_app/Gemfile
+gem 'pg'
+gem 'therubyracer'
+gem 'devise' # bersama package devise yang tadi
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem "bootstrap-sass-rails"
+
+4. bundle install
+
+jika error :
+
+An error occurred while installing libv8 (3.16.14.19), and Bundler
+cannot continue.
+Make sure that `gem install libv8 -v '3.16.14.19'` succeeds before bundling.
+
+solusi,
+pada gemfile uncomment / nonaktifkan package :
+#gem 'therubyracer'
+
+bundle install kembali 
+
+5. rails generate devise:install
+
+6. buka routes.rb
+nonaktifkan #root :to => "posts#index"
+ganti dengan :
+root :to => "muhammad#index" 
+
+7. buka views/layouts/application.html.erb
+
+tambahkan pada body :
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+sehingga persis seperti :
+
+<body>
+	<p class="notice"><%= notice %></p>
+	<p class="alert"><%= alert %></p>
+	<%= yield %>
+</body>
+
+8. rails generate devise User
+akan membuat :
+
+      invoke  active_record
+      create    db/migrate/20171119060154_devise_create_users.rb
+      create    app/models/user.rb
+      invoke    test_unit
+      create      test/models/user_test.rb
+      create      test/fixtures/users.yml
+      insert    app/models/user.rb
+       route  devise_for :users
+
+9. rake db:migrate /rails db:migrate
+
+10. buka application_controller.rb di H:\laragon\www\rubyonrails\buildcms\cms2\app\controllers
+tambahkan :
+
+before_action :authenticate_user!
+
+sehingga : 
+
+class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
+  before_action :authenticate_user!
+end
+
+11. rails s
+dan buka localhost:3000 akan ada halaman login

@@ -21,25 +21,22 @@ rails db:migrate VERSION=20171116083319
 2. rails db:migrate
 
 3. pada models/person.rb edit/rename menjadi AdminUsers.rb beserta edit class nya sesuai dengan file migrasi 20171116083319_admin_users.rb
-jadi intinya nama model/ class pada model harus sama dengan class pada migrasi misal :
+jadi nama class pada model harus sama dengan class pada migrasi misal :
 
 nama model :  AdminUser.rb 
 
-maka pada class nya :
+maka pada class nya model AdminUser.rb :
 class AdminUser < ApplicationRecord
 end
 
 begitupun dengan class migrasinya pada file 20171116083319_admin_users.rb:
 
+classnya : 
+
 class AdminUsers < ActiveRecord::Migration[5.1]
 
-
-
-
-
-
-
-=======================
+CONTOH  RAILS MODEL PLAY INSERT , EDIT DAN DELETE
+======================
 CARA SAVE DATA KE DATABASE DENGAN MODELS
 # tb persons pada model person
 person = person.new

@@ -1,0 +1,114 @@
+REFF : https://www.youtube.com/watch?v=JUbgo3hgHxs&index=37&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+===================================================
+1. rails console 
+2. Insert data dengan create ke table admin_users :
+mine = AdminUser.create(:firstName => 'Muhammed' , :lastName => 'Essa' , :email => 'danigunawan.elektroug@gmail.com')
+3. page = Page.find(1)
+4. page.admin_users << mine
+jika error : 
+
+ActiveModel::MissingAttributeError: can't write unknown attribute `admin_user_id`
+from (irb):15
+
+solusi buka migrasi 20171118132441_admin_users_page_creation.rb ganti : 
+
+id_admin_users menjadi admin_user_id
+
+sehingga :
+class AdminUsersPageCreation < ActiveRecord::Migration[5.1]
+  def up
+  	  create_table :admin_users_pages do |t|
+      t.integer "admin_user_id"
+      t.integer "page_id"
+     end 
+  	 add_index("admin_users_pages",["admin_user_id","page_id"])
+  
+end
+
+  def down
+  	drop_table :admin_users_pages
+  end
+
+
+end
+
+5. rails db:migrate:status
+
+database: cms_development
+
+ Status   Migration ID    Migration Name
+--------------------------------------------------
+   up     20171116072616  My muhammed
+   up     20171116072952  Create people
+   up     20171116083319  Admin users
+   up     20171116093703  Create topics
+   up     20171116093811  Create pages
+   up     20171116093903  Create sections
+   up     20171118132441  Admin users page creation
+
+6. kita coba migrate down yang berisi perintah drop table admin_users_pages pada migrasi Admin users page creation:
+
+rails db:migrate:down VERSION=20171118132441
+
+7. cek pada database pastikan sudah hilang admin_users_pages
+
+8. lalu kita coba migrasi kembali, kita up lagi table yang hilang :
+
+rails db:migrate
+
+pastikan table kembali semula dan yang hilang ada kembali.
+
+9. kita cek di console : 
+rails console 
+
+10. AdminUser.all # AdminUser ini diambil pada class AdminUser pada models/admin_user.rb
+11. mine = AdminUser.find(3) # buat variabel berisi menampilkan dan berdasarkan id 3
+12. mine.firstName # memanggil object firstName pada mine 
+13. page = Page.find(1)
+14. page.admin_users
+perintah diatas artinya menjoinkan admin_users dengan admin_users_pages:
+SELECT  `admin_users`.* FROM `admin_users` INNER JOIN `admin_users_pages` ON `admin_users`.`id` = `admin_users_pages`.`admin_user_id` WHERE `admin_users_pages`.`page_id` = 1 LIMIT 11
+15. page.admin_users << mine
+artinya insert FK admin_user_id dan page_id pada admin_users_pages 
+jatuhnya has_and_belongs_to_many page degan admin dan admin dengan page: 
+
+output : 
+
+INSERT INTO `admin_users_pages` (`admin_user_id`, `page_id`) VALUES (3, 1)
+
+SELECT  `admin_users`.* FROM `admin_users` INNER JOIN `admin_users_pages` ON `admin_users`.`id` = `admin_users_pages`.`admin_user_id` WHERE `admin_users_pages`.`page_id` = 1 LIMIT 11
+
+16. page.admin_users.empty?
+17. page.admin_users.size
+output : 
+SELECT COUNT(*) FROM `admin_users` INNER JOIN `admin_users_pages` ON `admin_users`.`id` = `admin_users_pages`.`admin_user_id` WHERE `admin_users_pages`.`page_id` = 1
+18. mine.pages
+output : 
+ SELECT  `pages`.* FROM `pages` INNER JOIN `admin_users_pages` ON `pages`.`id` = `admin_users_pages`.`page_id` WHERE `admin_users_pages`.`admin_user_id` = 3 LIMIT 11
+
+19. buat model SectionEdit
+rails generate model SectionEdit
+
+20. buka file migrasi section_edit : 20171118171453_create_section_edits.rb
+ubah menjadi seperti ini :
+
+class CreateSectionEdits < ActiveRecord::Migration[5.1]
+ def up
+  	  create_table :section_edit do |t| # section_edit samakan dengan nama model section_edit.rb
+      t.integer "admin_user_id"
+      t.integer "section_id"
+      t.string "summary"
+      t.timestamps
+     end 
+  	 add_index("section_edit",["admin_user_id","section_id"])
+  
+end
+
+  def down
+  	drop_table :section_edit
+  end
+
+
+end
+
+21. rails db:migrate

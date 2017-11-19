@@ -1,0 +1,17 @@
+<h1> index page</h1>
+<p>Find me in app/views/muhammed/index.html.erb</p>
+
+<%= link_to('Welcome' , {:action => 'welcome'})    %><br>
+
+<%= link_to('page id' , {:action => 'essa',:page =>3 ,:id =>2})    %><br>
+
+
+
+# ID =  <%= params[:id]%>
+# Page = <%= params[:page]%>
+<br>
+ID =  <%= @id %>
+Page = <%= @page %>
+<br>
+Page = <%= @page.to_i + 2 %>
+

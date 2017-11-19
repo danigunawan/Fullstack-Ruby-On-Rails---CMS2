@@ -14,8 +14,8 @@ default: &default
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password:
-  host: localhost
+  password: 
+  socket: /var/lib/mysql/mysql.sock
 
 development:
   <<: *default
@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: cms2_production
-  username: cms2
-  password: <%= ENV['CMS2_DATABASE_PASSWORD'] %>
+  database: cms_production
+  username: cms
+  password: <%= ENV['CMS_DATABASE_PASSWORD'] %>

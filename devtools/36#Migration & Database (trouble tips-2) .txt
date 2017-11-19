@@ -1,0 +1,51 @@
+REFF : https://www.youtube.com/watch?v=Wt2xstEfkP0&index=36&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+=============================
+1. rails db:migrate:status
+database: cms_development
+
+ Status   Migration ID    Migration Name
+--------------------------------------------------
+   up     20171116072616  My muhammed
+   up     20171116072952  Create people
+   up     20171116083319  Admin users
+   up     20171116093703  Create topics
+   up     20171116093811  Create pages
+   up     20171116093903  Create sections
+   up     20171118132441  Admin users page creation
+
+2. rails db:migrate:down VERSION=20171116083319
+jika error 
+
+solusi buka migrate 20171116083319_admin_users.rb:
+buka lalu ubah seperti dibawah ini :
+
+class AdminUsers < ActiveRecord::Migration[5.1]
+
+
+
+ def up
+    rename_table("persons", "admin_users") 
+    add_column( "admin_users" , "username",:string,:limit=>45)
+    change_column("admin_users","email" , :string, :limit=>120)
+    rename_column("admin_users","password","hashedPassword"  )
+    add_index("admin_users","username")
+  end
+
+  def down
+ remove_index("adminUsers","username")
+ rename_column("adminUsers", "hashedPassword","password" )
+ change_column("adminUsers","email" )
+ remove_column( "adminUsers" , "username" ) 
+ rename_table(  "adminUsers","persons") 
+   
+    
+  
+      
+    end
+end
+
+
+
+3. rails db:migrate
+
+4. jika masih error remove semua table di database lalu migrasi kembali : rails db:migrate

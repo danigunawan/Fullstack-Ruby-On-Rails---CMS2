@@ -1,0 +1,117 @@
+REFF : https://www.youtube.com/watch?v=uqThynlPQhk&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=43
+====================================================================================================
+1. buka bootstrap-3.3.7.zip pada dist copykan isi js ke H:\laragon\www\rubyonrails\buildcms\cms2\app\assets\javascripts
+
+2. buka application.js di H:\laragon\www\rubyonrails\buildcms\cms2\app\assets\javascripts
+ubah seperti dibawah ini :
+
+//= require rails-ujs
+
+//= require turbolinks
+
+//  require_tree .
+
+//= require bootstrap  
+
+3. buka views/layouts/application.html.erb tambahkan :
+ <%= javascript_include_tag 'bootstrap'  %>
+
+sehingga : 
+
+  <head>
+    <title>BuildCms</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+     <%= javascript_include_tag 'bootstrap'  %>
+  </head>
+
+4. buka assets.rb di H:\laragon\www\rubyonrails\buildcms\cms2\config\initializers tambahkan bootstrap.js di :
+Rails.application.config.assets.precompile += %w( bootstrap.css )
+
+sehingga :
+
+Rails.application.config.assets.precompile += %w(bootstrap.js bootstrap.css)
+
+5. kita akan test bootstrapnya pada html.
+buka H:\laragon\www\rubyonrails\buildcms\cms2\app\views\posts\index.html.erb
+
+kita akan tambahkan class table hover pada tbody : 
+
+dari : 
+
+ <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.name %></td>
+        <td><%= post.email %></td>
+        <td><%= post.title %></td>
+        <td><%= post.content %></td>
+        <td><%= link_to 'Show', post %></td>
+        <td><%= link_to 'Edit', edit_post_path(post) %></td>
+        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+menjadi : 
+
+  <tbody class="table table-hover">
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.name %></td>
+        <td><%= post.email %></td>
+        <td><%= post.title %></td>
+        <td><%= post.content %></td>
+        <td><%= link_to 'Show', post %></td>
+        <td><%= link_to 'Edit', edit_post_path(post) %></td>
+        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+6. buka _form.html.erb di H:\laragon\www\rubyonrails\buildcms\cms2\app\views\posts, kita akan tambahkan class form control untuk input
+ubah sehingga seperti dibawah ini :
+
+<%= form_with(model: post, local: true) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field ">
+    <%= form.label :name %>
+
+   <%= form.text_field :name, id: :post_name %> 
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :post_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :post_title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content, id: :post_content %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+
+

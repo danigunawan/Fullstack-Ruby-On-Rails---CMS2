@@ -1,0 +1,13 @@
+REFF : https://www.youtube.com/watch?v=aVbwpKhf5wk&index=39&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+===============================
+1. cara mengakses restfull pada route ror 
+root :to => "posts#index" # ini untuk mengakses method index yang berada pada controller posts_controller.rb
+
+yakni : 
+
+  def index
+    @posts = Post.all
+  end
+
+uncomment root yang lain
+ # root 'muhammad#index' #

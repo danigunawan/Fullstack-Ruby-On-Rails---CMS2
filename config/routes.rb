@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
-  get 'muhammad/index'
+  
+  devise_for :users
+ #root :to => "posts#index"
+   resources :posts
+ get 'muhammed/essa'
+ get 'muhammed/welcome'
 
-  root 'muhammad#index' # 
+ get 'muhammed/login'
+ 
+ #root 'muhammed#index'
+ root to: "muhammed#essa"
 
-  get 'muhammad/welcome'
 
-  get 'muhammad/login'
 
-  get 'muhammad/arrayLoop'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

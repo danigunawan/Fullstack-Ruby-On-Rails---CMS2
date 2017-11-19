@@ -1,0 +1,131 @@
+REFF : https://www.youtube.com/watch?v=33mDPWmXA_0&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2&index=41
+========================================
+1.buka application_controller.rb di H:\laragon\www\rubyonrails\buildcms\cms2\app\controllers
+tambahkan :
+skip_before_action :authenticate_user!, only: :index
+
+sehingga :
+
+class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
+  before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: :index # fungsi ini adalah menskip login authentication jika kita akses web jadi tidak butuh login
+end
+
+coba akses : http://localhost:3000/ maka dia tidak akan redirect ke http://localhost:3000/users/sign_in
+
+
+2. buka rename H:\laragon\www\rubyonrails\buildcms\cms2\app\views\muhammad\index.html.erb menjadi essa.html.erb
+
+ubah index link isi essa.html.erb :
+
+<%= link_to('page.id', {:action => 'index', :page=>3,:id=>2}) %> <br>
+
+menjadi :
+
+<%= link_to('page.id', {:action => 'essa', :page=>3,:id=>2}) %> <br>
+
+3. buka H:\laragon\www\rubyonrails\buildcms\cms2\app\views\muhammad\welcome.html.erb
+
+ubah isi dari : 
+
+<%= link_to('index', {:action => 'index'}) %> <br>
+
+menjadi :
+
+<%= link_to('essa', {:action => 'essa'}) %> <br>
+
+3. buka routes.rb 
+
+ubah :
+
+root :to => "muhammad#index" 
+ get 'muhammad/index'
+
+menjadi :
+
+root :to => "muhammad#essa" 
+get 'muhammad/essa'
+
+4. buka application_controller.rb 
+
+ubah index dari :
+
+skip_before_action :authenticate_user!, only: :index
+
+menjadi : 
+
+skip_before_action :authenticate_user!, only: :essa
+
+5. coba daftar akun signup
+
+jika error saat daftar : 
+cannot load such file -- bcrypt_ext
+
+solusi :
+
+gem uninstall bcrypt-ruby
+gem uninstall bcrypt
+gem install bcrypt --platform=ruby
+
+6. buka views/layouts/application.html.erb
+
+tambahkan :
+
+<p class="navbar-text pull-right">
+<% if user_signed_in? %>
+  Logged in as <strong><%= current_user.email %></strong>.
+  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+<% else %>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+<% end %>
+</p>
+
+sehingga : 
+<body>
+
+<p class="navbar-text pull-right">
+<% if user_signed_in? %>
+  Logged in as <strong><%= current_user.email %></strong>.
+  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+<% else %>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+<% end %>
+</p>
+
+</body>
+
+7. coba buka localhost:3000
+maka akan ada menu logout dan edit profile
+
+8. rails generate devise:views
+output : 
+      invoke  Devise::Generators::SharedViewsGenerator
+      create    app/views/devise/shared
+      create    app/views/devise/shared/_links.html.erb
+      invoke  form_for
+      create    app/views/devise/confirmations
+      create    app/views/devise/confirmations/new.html.erb
+      create    app/views/devise/passwords
+      create    app/views/devise/passwords/edit.html.erb
+      create    app/views/devise/passwords/new.html.erb
+      create    app/views/devise/registrations
+      create    app/views/devise/registrations/edit.html.erb
+      create    app/views/devise/registrations/new.html.erb
+      create    app/views/devise/sessions
+      create    app/views/devise/sessions/new.html.erb
+      create    app/views/devise/unlocks
+      create    app/views/devise/unlocks/new.html.erb
+      invoke  erb
+      create    app/views/devise/mailer
+      create    app/views/devise/mailer/confirmation_instructions.html.erb
+      create    app/views/devise/mailer/email_changed.html.erb
+      create    app/views/devise/mailer/password_change.html.erb
+      create    app/views/devise/mailer/reset_password_instructions.html.erb
+      create    app/views/devise/mailer/unlock_instructions.html.erb
+
+9. rails s

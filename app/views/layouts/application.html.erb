@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Cms2</title>
+    <title>Cms</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+ <%= stylesheet_link_tag  'bootstrap', media: 'all'  %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+       <%= javascript_include_tag 'bootstrap'  %>
+
+  
   </head>
 
   <body>
+
+ 
+
+  <div class="container">
+
+      <div class="starter-template">
+       <br><br>
+        </div>
+
+
+
+
+ <p class="navbar ">
+<% if user_signed_in? %>
+  Logged in as <strong><%= current_user.email %></strong>.
+  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+<% else %>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+<% end %>
+</p>
+
+
     <%= yield %>
   </body>
 </html>

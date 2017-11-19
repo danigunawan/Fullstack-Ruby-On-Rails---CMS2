@@ -1,0 +1,94 @@
+REFF : https://www.youtube.com/watch?v=-8o_p0seoIE&index=38&list=PLMYF6NkLrdN_AvYsR6G6wTQM1zHlY77f2
+https://www.railstutorial.org/
+https://code.tutsplus.com/courses/build-a-cms-with-rails
+command line : http://guides.rubyonrails.org/command_line.html
+============================================
+# list generate syntax : 
+rails generate
+
+output : 
+Usage: rails generate GENERATOR [args] [options]
+
+General options:
+  -h, [--help]     # Print generator's options and usage
+  -p, [--pretend]  # Run but do not make any changes
+  -f, [--force]    # Overwrite files that already exist
+  -s, [--skip]     # Skip files that already exist
+  -q, [--quiet]    # Suppress status output
+
+Please choose a generator below.
+
+Rails:
+  assets
+  channel
+  controller
+  generator
+  helper
+  integration_test
+  jbuilder
+  job
+  mailer
+  migration
+  model
+  resource
+  scaffold
+  scaffold_controller
+  system_test
+  task
+
+Coffee:
+  coffee:assets
+
+Js:
+  js:assets
+
+TestUnit:
+  test_unit:generator
+  test_unit:plugin
+
+# diatas adalah perintah untuk generate diperlukan untuk membuat cms nantinya
+
+MULAI
+===============
+1. rails g scaffold Posts name:string email:string title:string content:text
+
+output : 
+
+ invoke  active_record
+      create    db/migrate/20171118190458_create_posts.rb
+      create    app/models/post.rb
+      invoke    test_unit
+      create      test/models/post_test.rb
+      create      test/fixtures/posts.yml
+      invoke  resource_route
+       route    resources :posts
+      invoke  scaffold_controller
+      create    app/controllers/posts_controller.rb
+      invoke    erb
+      create      app/views/posts
+      create      app/views/posts/index.html.erb
+      create      app/views/posts/edit.html.erb
+      create      app/views/posts/show.html.erb
+      create      app/views/posts/new.html.erb
+      create      app/views/posts/_form.html.erb
+      invoke    test_unit
+      create      test/controllers/posts_controller_test.rb
+      invoke    helper
+      create      app/helpers/posts_helper.rb
+      invoke      test_unit
+      invoke    jbuilder
+      create      app/views/posts/index.json.jbuilder
+      create      app/views/posts/show.json.jbuilder
+      create      app/views/posts/_post.json.jbuilder
+      invoke  test_unit
+      create    test/system/posts_test.rb
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/posts.coffee
+      invoke    scss
+      create      app/assets/stylesheets/posts.scss
+      invoke  scss
+      create    app/assets/stylesheets/scaffolds.scss
+
+2. rails db:migrate
+3. rails s
